@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Add Student</title>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet"/>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/5.0.0/mdb.min.css" rel="stylesheet"/>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+<style>
+@media (min-width: 1025px) {
+.h-custom {
+height: 100vh !important;
+}
+}
+</style>
+<body>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/5.0.0/mdb.min.js"></script>
+<section class="h-100 h-custom" style="background-color: #8fc4b7;">
+  <form method="POST" action="../classes/add.php">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-lg-8 col-xl-6">
+        <div class="card rounded-3">
+          <img src="class.jpg"
+            class="w-100" style="border-top-left-radius: .3rem; border-top-right-radius: .3rem;"
+            alt="Sample photo">
+          <div class="card-body p-4 p-md-5">
+            <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2">Add Class</h3>
+            <form class="px-md-2">
+
+              <div class="form-outline mb-4">
+                  <input type="text" id="firstname" name="name" class="form-control" />
+                  <label class="form-label"  for="form3Example1q" required>Name</label>
+              </div>
+              <div class="form-outline mb-4">
+                  <input type="text" id="lastname" name="code" class="form-control" />
+                  <label class="form-label"  for="form3Example1q" required>Code</label>
+              </div>
+              <div class="form-outline mb-4">
+                  <input type="text" name="description" class="form-control" id="description" />
+                  <label class="form-label" required>Description</label>
+              </div>
+                <div class="col-md-6 mb-4">
+
+                  <select class="select" name="employee_number" id="employee_number">
+                    <option value="{{employee_number}}" />
+                      {{# showTeachers }}
+                      <option value="{{employee_number}}">{{first_name}} {{last_name}} </option>
+                      {{/ showTeachers }}
+                  </select>
+                </div>
+                <a href="../classes/index.php"> <button type="button" class="btn btn-danger btn-lg mb-1">Back</button></a>
+              <button type="submit" class="btn btn-success btn-lg mb-1">Submit</button>
+            </div>
+          </div>  
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</form>
+</section>
+</body>
+</html>
+

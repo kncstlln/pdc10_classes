@@ -5,12 +5,12 @@ use \PDO;
 
 class Teacher
 {
-	protected $id;
-	protected $first_name;
-	protected $last_name;
-	protected $email;
-    protected $contact;
-    protected $employee_number;
+	public $id;
+	public $first_name;
+	public $last_name;
+	public $email;
+    public $contact;
+    public $employee_number;
 
 
     public function __construct($first_name, $last_name, $email, $contact, $employee_number)
@@ -63,14 +63,36 @@ class Teacher
 				':last_name' => $this->getLastName(),
                 ':email' => $this->getEmail(),
                 ':contact' => $this->getContact(),
-                ':employee_number' => $this->getEmployeeNumber(),
+                ':employee_number' => $this->getEmployeeNumber()
 			]);
 
 		} catch (Exception $e) {
 			error_log($e->getMessage());
 		}
 	}
-    public function update($first_name, $last_name, $email, $contact, $employee_number)
+	public function getById($id)
+	{
+		try {
+			$sql = 'SELECT * FROM teachers WHERE id=:id';
+			$statement = $this->connection->prepare($sql);
+			$statement->execute([
+				':id' => $id
+			]);
+
+			$row = $statement->fetch();
+
+			$this->id = $row['id'];
+			$this->first_name = $row['first_name'];
+			$this->last_name = $row['last_name'];
+			$this->email = $row['email'];
+			$this->contact= $row['contact'];
+			$this->employee_number = $row['employee_number'];
+
+		} catch (Exception $e) {
+			error_log($e->getMessage());
+		}
+	}
+    public function updateTeacher($first_name, $last_name, $email, $contact, $employee_number)
 	{
 		try {
 			$sql = 'UPDATE teachers SET first_name=?, last_name=?, email=?, contact=?, employee_number=? WHERE id = ?';
@@ -84,11 +106,7 @@ class Teacher
                 $this->getID()
 
 			]);
-			$this->first_name = $first_name;
-			$this->last_name = $last_name;
-            $this->email = $email;
-            $this->contact = $contact;
-            $this->employee_number = $employee_number;
+
 		} catch (Exception $e) {
 			error_log($e->getMessage());
 		}

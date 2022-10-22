@@ -12,7 +12,6 @@
     ],
     "require": {
         "vlucas/phpdotenv": "^5.4",
-        "mustache/mustache": "~2.5",
-        "phpmailer/phpmailer": "^6.6"
+        "mustache/mustache": "~2.5"
     }
 }

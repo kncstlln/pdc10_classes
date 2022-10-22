@@ -38,13 +38,13 @@ class Student
 		return $this->last_name;
 	}
 
-	public function getStudentNumber()
-	{
-		return $this->student_number;
-	}
-    public function getEmail()
+	public function getEmail()
 	{
 		return $this->email;
+	}
+    public function getStudentNumber()
+	{
+		return $this->student_number;
 	}
     public function getContact()
 	{
@@ -61,14 +61,14 @@ class Student
     public function addStudent()
 	{
 		try {
-			$sql = "INSERT INTO students SET first_name=:first_name, last_name=:last_name, student_number=:student_number,email=:email, contact=:contact, program=:program";
+			$sql = "INSERT INTO students SET first_name=:first_name, last_name=:last_name, email=:email, student_number=:student_number, contact=:contact, program=:program";
 			$statement = $this->connection->prepare($sql);
 
 			return $statement->execute([
 				':first_name' => $this->getFirstName(),
 				':last_name' => $this->getLastName(),
-                ':student_number' => $this->getStudentNumber(),
                 ':email'=> $this->getEmail(),
+				':student_number' => $this->getStudentNumber(),
                 ':contact'=> $this->getContact(),
                 ':program'=> $this->getProgram()
 			]);
@@ -77,27 +77,44 @@ class Student
 			error_log($e->getMessage());
 		}
 	}
-    public function editStudent($first_name, $last_name, $student_number, $email, $contact, $program)
+	public function getById($id)
 	{
 		try {
-			$sql = 'UPDATE students SET first_name=?, last_name=?, student_number=?, email=?, contact=?, program=? WHERE id = ?';
+			$sql = 'SELECT * FROM students WHERE id=:id';
+			$statement = $this->connection->prepare($sql);
+			$statement->execute([
+				':id' => $id
+			]);
+
+			$row = $statement->fetch();
+
+			$this->id = $row['id'];
+			$this->first_name = $row['first_name'];
+			$this->last_name = $row['last_name'];
+			$this->email = $row['email'];
+			$this->student_number= $row['student_number'];
+			$this->contact = $row['contact'];
+			$this->program = $row['program'];
+
+		} catch (Exception $e) {
+			error_log($e->getMessage());
+		}
+	}
+    public function updateStudent($first_name, $last_name, $email, $student_number, $contact, $program)
+	{
+		try {
+			$sql = 'UPDATE students SET first_name=?, last_name=?, email=? , student_number=?, contact=?, program=? WHERE id = ?';
 			$statement = $this->connection->prepare($sql);
 			$statement->execute([
 				$first_name,
                 $last_name,
-                $student_number,
 				$email,
+				$student_number,
 				$contact,
 				$program,
                 $this->getID()
 
 			]);
-			$this->first_name = $first_name;
-			$this->last_name = $last_name;
-			$this->student_number = $student_number;
-			$this->email = $email;
-			$this->contact = $contact;
-			$this->program = $program;
 			
 		} catch (Exception $e) {
 			error_log($e->getMessage());

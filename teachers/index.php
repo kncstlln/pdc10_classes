@@ -6,4 +6,6 @@ use Models\Teacher;
 $teacher= new Teacher('', '', '', '', '', '');
 $teacher->setConnection($connection);
 $showTeachers = $teacher->getAll();
-var_dump($showTeachers);
+
+$template = $mustache->loadTemplate('teacher/index.mustache');
+echo $template->render(compact('showTeachers'));
