@@ -24,8 +24,8 @@ height: 100vh !important;
                   <div class="card-body">
                     <h4 class="card-title" style="font-size:32px;">Add Student</h4>
                     <form class="forms-sample" method="POST" action="../class-roster/add.php">
-                      <input type="hidden" id="id" name="id" value="{{id}}">
-                      <input type="hidden" id="code" name="code" value="{{code}}">
+                    <input type="hidden" id="id" name="id" value="{{id}}">
+                      <input type="hidden" id="class_code" name="class_code" value="{{class_code}}">
                       <div class="form-group">
                         <label for="student_number">Student</label>
                         <select class="select" name="student_number" id="student_number">
@@ -37,7 +37,7 @@ height: 100vh !important;
                       </div>
                       <br>
                       <button type="submit" class="btn btn-primary mr-2" name="submit_form">Add</button>
-                      <a href="../class-roster/edit.php?code={{code}}"><input type="button" class="btn btn-dark" value="Cancel"/></a>
+                      <a href="../class-roster/index.php"><input type="button" class="btn btn-dark" value="Cancel"/></a>
                     </form>
                   </div>
                 </div>

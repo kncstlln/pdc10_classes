@@ -12,7 +12,7 @@ class ClassRoster
 
 	public function __construct($student_number, $class_code)
     {
-        $this->student_name = $student_number;
+        $this->student_number = $student_number;
         $this->class_code = $class_code;
     }
 
@@ -31,30 +31,23 @@ class ClassRoster
 		return $this->class_code;
 	}
 
+	public function getEnrolledAt()
+	{
+		return $this->enrolled_at;
+	}
+
     public function setConnection($connection)
 	{
 		$this->connection = $connection;
 	}
-    
+
 	
 	public function displayClassRoster()
 	{
 		try {
-			$sql = "SELECT classes.id, classes.code, teachers.first_name, teachers.last_name FROM classes INNER JOIN teachers on classes.teacher_id=teachers.employee_number";
+			$sql = "SELECT classes.id, classes.name, classes.description, classes.code, teachers.first_name, teachers.last_name, (SELECT COUNT(student_number) FROM classes_rosters WHERE classes_rosters.class_code = classes.code) AS students_enrolled FROM classes INNER JOIN teachers on classes.teacher_id=teachers.employee_number";
 			$data = $this->connection->query($sql)->fetchAll();
 			return $data;
-
-		} catch (Exception $e) {
-			error_log($e->getMessage());
-		}
-	}
-
-	public function displayStudents()
-	{
-		try {
-			$sql = "SELECT * FROM classes_rosters INNER JOIN students on classes_rosters.student_number=students.student_number";
-			$statement = $this->connection->query($sql)->fetchAll();
-			return $statement;
 
 		} catch (Exception $e) {
 			error_log($e->getMessage());
@@ -92,58 +85,43 @@ class ClassRoster
 			$this->id = $row['id'];
 			$this->student_number = $row['student_number'];
 			$this->class_code = $row['class_code'];
-
+			$this->enrolled_at = $row['enrolled_at'];
 
 		} catch (Exception $e) {
 			error_log($e->getMessage());
 		}
 
 	}
-    public function updateClassRoster($student_number, $class_code)
-	{
-		try {
-			$sql = 'UPDATE classes_rosters SET student_number=?, class_code=? WHERE id = ?';
-			$statement = $this->connection->prepare($sql);
-			$statement->execute([
-				$student_number,
-                $class_code,
-                $this->getID()
 
-			]);
-
-
-		} catch (Exception $e) {
-			error_log($e->getMessage());
-		}
-        
-	}
     public function delete()
 	{
 		try {
-			$sql = 'DELETE FROM classes_rosters WHERE id=?';
+			$sql = 'DELETE FROM classes_rosters WHERE id=:id';
 			$statement = $this->connection->prepare($sql);
-			$statement->execute([
-				$this->getId()
+			return $statement->execute([
+				':class_code' => $this->getClassCode(),
+                ':student_number' => $this->getStudentNumber(),
+				':enrolled_at' => $this->getEnrolledAt(),
 			]);
+
 		} catch (Exception $e) {
 			error_log($e->getMessage());
 		}
 	}
-	public function addClassRoster()
-	{
+	public function addClassRoster(){
 		try {
-			$sql = "INSERT INTO classes_rosters (class_code, student_number) SELECT ?,? WHERE NOT EXISTS (Select * FROM classes_rosters WHERE class_code=? AND student_number=?) LIMIT 1;";
+
+			$sql = "INSERT INTO classes_rosters SET student_number=:student_number, class_code=:class_code";
 			$statement = $this->connection->prepare($sql);
 
 			return $statement->execute([
-				$this->getClassCode(),
-                $this->getStudentNumber()
-
+                ':student_number' => $this->getStudentNumber(),
+				':class_code' => $this->getClassCode()
 			]);
 
 		} catch (Exception $e) {
 			error_log($e->getMessage());
 		}
-	}
+    }
 }
 

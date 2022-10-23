@@ -81,15 +81,16 @@ class ClassRecord
 			$this->name = $row['name'];
 			$this->code = $row['code'];
 			$this->description = $row['description'];
+			$this->teacher_id = $row['teacher_id'];
 
 		} catch (Exception $e) {
 			error_log($e->getMessage());
 		}
 	}
-    public function updateClass($name, $code, $description)
+    public function updateClass($name, $code, $description, $teacher_id)
 	{
 		try {
-			$sql = 'UPDATE classes SET name=?, code=?, description=? WHERE id = ?';
+			$sql = 'UPDATE classes SET name=?, code=?, description=?, teacher_id=? WHERE id = ?';
 			$statement = $this->connection->prepare($sql);
 			$statement->execute([
 				$name,
@@ -129,7 +130,7 @@ class ClassRecord
 	}
 	public function displayClassRoster($id){
         try {
-            $sql = "SELECT * FROM classes WHERE id=:id";
+            $sql = "SELECT classes.id, classes.code FROM classes WHERE id=:id";
             $statement = $this->connection->prepare($sql);
             $statement->execute([
                 ':id' => $id

@@ -144,4 +144,18 @@ class Student
 			error_log($e->getMessage());
 		}
 	}
+	public function viewClass($id)
+{
+        try {
+            $sql = "SELECT * FROM students INNER JOIN classes_rosters ON students.student_number=classes_rosters.student_number INNER JOIN classes ON classes_rosters.class_code=classes.code WHERE students.id=:id";
+            $statement = $this->connection->prepare($sql);
+            $statement->execute([
+                ':id' => $id
+            ]);
+            return $statement->fetchAll();
+        } catch (Exception $e) {
+            error_log($e->getMessage());
+        }
+    }
+
 }

@@ -118,7 +118,7 @@ $(document).ready(function(){
         <div class="table-wrapper">
             <div class="table-title">
                 <div class="row">
-                    <div class="col-sm-8"><h2>Class<b> Roster</b></h2></div>
+                    <div class="col-sm-8"><h2>{{first_name}} <b>{{last_name}}</b></h2></div>
                     <div class="col-sm-4">
                     </div>
                 </div>
@@ -127,24 +127,19 @@ $(document).ready(function(){
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Class</th>
-                        <th>Assigned Teacher</th>
-                        <th># of Students</th>
-                        <th>Actions</th>
+                        <th>Name</th>
+                        <th>Description</th>
                     </tr>
                 </thead>
-                {{# showRoster}}
+                {{# showClass}}
                   <tbody>
                     <tr>
                       <th scope="row">{{id}}</th>
-                      <td>{{code}}</td>
-                      <td>{{first_name}}  {{last_name}}</td>
-                      <td>{{students_enrolled}}</td>
-                      <td> <a href="../class-roster/view.php?id={{ id }}" class="view" title="View" data-toggle="tooltip"><i class="fa-solid fa-eye"></i></a>
-                     </td>
+                      <td>{{name}}</td>
+                      <td>{{description}}</td>
                     </tr>
                   </tbody>
-				{{/ showRoster}}
+				  {{/ showClass}}
             </table>
         </div>
     </div>  

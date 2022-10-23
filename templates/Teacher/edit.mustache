@@ -32,6 +32,7 @@ height: 100vh !important;
             <form class="px-md-2">
 			  <input type="hidden" name="id" value= "{{id}}" />
               <div class="form-outline mb-4">
+              {{# showTeachers}}
                   <input type="text" id="firstname" name="first_name" value="{{first_name}}" class="form-control" required/>
                   <label class="form-label"></label>
               </div>
@@ -51,6 +52,7 @@ height: 100vh !important;
                   <input type="text" name="employee_number" class="form-control" value="{{employee_number}}" required />
                   <label class="form-label"></label>
               </div>
+              {{/ showTeachers}}
 
               
               <a href="../teachers/index.php"> <button type="button" class="btn btn-danger btn-lg mb-1">Back</button></a>

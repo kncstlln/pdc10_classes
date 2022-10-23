@@ -9,11 +9,12 @@ try{
         $name= $_POST['name'];
         $code = $_POST['code'];
         $description = $_POST['description'];
+        $teacher_id = $_POST['teacher_id'];
         
         $classes= new ClassRecord ('', '', '', '', '','');
         $classes->setConnection($connection);
         $classes->getById($id);
-        $classes->updateClass($name, $code, $description);
+        $classes->updateClass($name, $code, $description, $teacher_id);
         header('Location: index.php');
 
     }

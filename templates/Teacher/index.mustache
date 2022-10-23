@@ -143,7 +143,9 @@ $(document).ready(function(){
                       <td>{{email}}</td>
                       <td>{{contact}}</td>
                       <td>{{employee_number}}</td>
-                      <td> <a href="../teachers/edit.php?id={{ id }}" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
+                      <td> 
+                        <a href="../teachers/view.php?id={{ id }}" class="view" title="view" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
+                        <a href="../teachers/edit.php?id={{ id }}" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
                         <a href="../teachers/delete.php?id={{ id }}" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
                       </td>
                     </tr>

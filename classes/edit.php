@@ -11,9 +11,6 @@ $teacher= new Teacher('', '', '', '', '', '');
 $teacher->setConnection($connection);
 $showTeachers = $teacher->getAll();
 
-$template = $mustache->loadTemplate('edit');
-echo $template->render(compact('showTeachers'));
-
 $id = $_GET['id'];
 $class= new ClassRecord('','', '', '', '', '');
 $class->setConnection($connection);
@@ -21,6 +18,7 @@ $class->getById($id);
 $name = $class->getName();
 $code = $class->getCode();
 $description = $class->getDescription();
+$teacher_id = $class->getTeacherId();
 
 
-echo $mustache->render('edit', compact('class', 'id','name','code','description'));
+echo $mustache->render('edit', compact('class', 'id','name','code','description', 'teacher_id', 'showTeachers'));
